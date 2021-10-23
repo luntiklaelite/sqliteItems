@@ -16,10 +16,6 @@ class MainActivity : AppCompatActivity() {
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         val db = DBHandler(this)
-        db.addItem(Item(0, "Апельсин", 120f, 5))
-        db.addItem(Item(0, "Яблоко", 12f, 5))
-        db.addItem(Item(0, "Банан", 50f, 2))
-        db.addItem(Item(0, "Мультифрукт", 99999f, 5))
         var items: ArrayList<Item> = db.getAllItems()
 
         recyclerView.adapter = Item.ItemAdapter(items)

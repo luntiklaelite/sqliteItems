@@ -11,6 +11,7 @@ import androidx.appcompat.view.menu.MenuView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.practiz1.MainActivity
 import com.example.practiz1.R
+import com.example.practiz1.data.DBHandler
 import kotlinx.android.synthetic.main.item_layout.view.*
 
 class Item(var ID:Int, var Name:String, var Price:Float, var Rate:Int) {
@@ -54,6 +55,7 @@ class Item(var ID:Int, var Name:String, var Price:Float, var Rate:Int) {
                     dialog.cancel()
                 }
                 dlg.setNegativeButton("Удалить") { dialog, id ->
+                    DBHandler.
                     dialog.cancel()
                 }
                 dlg.show()
