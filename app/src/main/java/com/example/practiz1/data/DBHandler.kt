@@ -62,8 +62,16 @@ class DBHandler(context: Context) : SQLiteOpenHelper(context, DBHandler.DB_NAME,
     }
     fun deleteItem(item: Item) {
         val db = this.writableDatabase
-        db.delete("items", "item_id = ?", arrayOf(item.ID as String))
-        GlobalScope
+        db.delete("items", "item_id = ?", arrayOf(item.ID.toString()))
+        db.close()
+    }
+    fun updateItem(item: Item) {
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put("item_name", item.Name)
+        values.put("item_rate", item.Rate)
+        values.put("item_price", item.Price)
+        db.update("items", values, "item_id = ?", arrayOf(item.ID.toString()))
         db.close()
     }
 }
