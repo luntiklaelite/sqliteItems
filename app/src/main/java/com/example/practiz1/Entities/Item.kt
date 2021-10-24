@@ -69,8 +69,7 @@ class Item(var ID:Int, var Name:String, var Price:Float, var Rate:Int) {
                         item.Price = view.EditPriceItem.text.toString().toFloat()
                         item.Rate = view.EditRateItem.rating.toInt()
                         db.updateItem(item)
-                        this.items = db.getAllItems()
-                        this.notifyDataSetChanged()
+                        this.notifyItemChanged(items.indexOf(item))
                         dialog.cancel()
                     })
                     builder.show()
@@ -78,8 +77,9 @@ class Item(var ID:Int, var Name:String, var Price:Float, var Rate:Int) {
                 }
                 dlg.setNegativeButton("Удалить") { dialog, id ->
                     db.deleteItem(item)
-                    items = db.getAllItems()
-                    this.notifyDataSetChanged()
+                    val index = items.indexOf(item)
+                    items.removeAt(index)
+                    this.notifyItemRemoved(index)
                     dialog.cancel()
                 }
                 dlg.show()

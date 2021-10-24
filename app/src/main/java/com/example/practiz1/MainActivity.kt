@@ -20,7 +20,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
+        val db = DBHandler(this)
+        var items: ArrayList<Item> = db.getAllItems()
 
+        recyclerView.adapter = Item.ItemAdapter(items)
         buttonAddItem.setOnClickListener {
             val view = LayoutInflater.from(this).inflate(R.layout.edit_item_layout, null)
             val builder = AlertDialog.Builder(this)
@@ -38,23 +41,13 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, "Введите название товара!", Toast.LENGTH_LONG).show()
                     return@OnClickListener
                 }
-                val db = DBHandler(this)
                 db.addItem(item)
-                fillItems()
+                items.add(item)
+                (recyclerView.adapter as Item.ItemAdapter).notifyItemInserted(items.indexOf(item))
                 dialog.cancel()
             })
             builder.show()
         }
-        fillItems()
     }
 
-    fun fillItems() {
-        val db = DBHandler(this)
-        /*db.addItem(Item(0, "Апельсин", 30f, 5))
-        db.addItem(Item(0, "Ананас", 60f, 5))
-        db.addItem(Item(0, "Яблоко", 10f, 4))
-        db.addItem(Item(0, "Банан", 40f, 2))*/
-        var items: ArrayList<Item> = db.getAllItems()
-        recyclerView.adapter = Item.ItemAdapter(items)
-    }
 }
